@@ -125,7 +125,7 @@ const Auth = () => {
             />
             <div>
               <Select value={form.department} onValueChange={handleDeptChange}>
-                <SelectTrigger required>
+                <SelectTrigger>
                   <SelectValue placeholder="Select Department" />
                 </SelectTrigger>
                 <SelectContent>
@@ -160,4 +160,3 @@ const Auth = () => {
   );
 };
 export default Auth;
-
