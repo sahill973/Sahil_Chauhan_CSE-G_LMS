@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,12 +9,28 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { format, isAfter } from "date-fns";
 
+// Type definitions for books and materials
+interface BookData {
+  title: string;
+  author: string;
+  category: string;
+  isbn: string;
+  description: string;
+}
+
+interface MaterialData {
+  title: string;
+  subject: string;
+  file_url: string;
+  description: string;
+}
+
 const AdminPanel = () => {
   // Book form state
-  const [book, setBook] = useState({
+  const [book, setBook] = useState<BookData>({
     title: "", author: "", category: "", isbn: "", description: ""
   });
-  const [material, setMaterial] = useState({
+  const [material, setMaterial] = useState<MaterialData>({
     title: "", subject: "", file_url: "", description: ""
   });
   const [loadingBook, setLoadingBook] = useState(false);
@@ -61,7 +78,7 @@ const AdminPanel = () => {
 
   // Add book
   const addBookMutation = useMutation({
-    mutationFn: async (newBook: typeof book) => {
+    mutationFn: async (newBook: BookData) => {
       const { data, error } = await supabase.from("books").insert([newBook]);
       if (error) throw error;
       return data;
@@ -122,7 +139,7 @@ const AdminPanel = () => {
 
   // Add study material
   const addMaterialMutation = useMutation({
-    mutationFn: async (newMaterial: typeof material) => {
+    mutationFn: async (newMaterial: MaterialData) => {
       const { data, error } = await supabase.from("study_materials").insert([newMaterial]);
       if (error) throw error;
       return data;

@@ -1,8 +1,6 @@
-
-import React from "react";
+import React, { useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import { useUser } from "@/hooks/useUser";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -18,8 +16,8 @@ const Index = () => {
         // Check if librarian account exists
         const { data: existingUser, error: searchError } = await supabase
           .from('profiles')
-          .select('email')
-          .eq('email', 'librarian@krmu.edu.in')
+          .select('department')
+          .eq('department', 'admin')
           .maybeSingle();
 
         if (searchError) throw searchError;
