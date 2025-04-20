@@ -21,53 +21,58 @@ const Dashboard = () => {
   if (!user) { navigate("/auth"); return null; }
 
   return (
-    <div className="max-w-6xl mx-auto p-5">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-primary">KR MANGALAM UNIVERSITY LIBRARY</h1>
-        <p className="text-muted-foreground">Welcome, {profile?.full_name || "User"}</p>
-      </div>
-      
-      <div className="mb-8">
-        <SearchBar onSearch={(query) => setSearchQuery(query)} />
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-primary via-[#ea384c11] to-secondary/10">
+      <div className="max-w-6xl mx-auto p-5">
+        <div className="text-center mt-8 mb-10">
+          <h1 className="text-4xl md:text-5xl font-playfair font-bold text-primary drop-shadow tracking-tight">
+            KR MANGALAM UNIVERSITY LIBRARY
+          </h1>
+          <p className="text-muted-foreground">Welcome, {profile?.full_name || "User"}</p>
+        </div>
 
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold">My Library</h2>
-        <Button
-          variant="outline"
-          onClick={async () => {
-            await supabase.auth.signOut();
-            navigate("/auth");
-          }}
-        >Logout</Button>
+        <div className="mb-8">
+          <SearchBar onSearch={(query) => setSearchQuery(query)} />
+        </div>
+
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-bold text-primary">My Library</h2>
+          <Button
+            variant="outline"
+            className="border-primary text-primary hover:bg-[#ea384c] hover:text-white transition"
+            onClick={async () => {
+              await supabase.auth.signOut();
+              navigate("/auth");
+            }}
+          >Logout</Button>
+        </div>
+
+        {profile?.department === "admin" && <AdminPanel />}
+
+        <Tabs defaultValue="recommendations" className="w-full mt-6">
+          <TabsList className="grid w-full grid-cols-4 bg-secondary/50 border border-primary rounded-md">
+            <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
+            <TabsTrigger value="catalogue">Full Catalogue</TabsTrigger>
+            <TabsTrigger value="borrowings">My Borrowings</TabsTrigger>
+            <TabsTrigger value="materials">Study Materials</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="recommendations" className="mt-6">
+            <BookRecommendations department={profile?.department} searchQuery={searchQuery} />
+          </TabsContent>
+
+          <TabsContent value="catalogue" className="mt-6">
+            <BooksList searchQuery={searchQuery} />
+          </TabsContent>
+
+          <TabsContent value="borrowings" className="mt-6">
+            <BorrowingHistory userId={user.id} />
+          </TabsContent>
+
+          <TabsContent value="materials" className="mt-6">
+            <StudyMaterialsList />
+          </TabsContent>
+        </Tabs>
       </div>
-
-      {profile?.department === "admin" && <AdminPanel />}
-
-      <Tabs defaultValue="recommendations" className="w-full mt-6">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
-          <TabsTrigger value="catalogue">Full Catalogue</TabsTrigger>
-          <TabsTrigger value="borrowings">My Borrowings</TabsTrigger>
-          <TabsTrigger value="materials">Study Materials</TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="recommendations" className="mt-6">
-          <BookRecommendations department={profile?.department} searchQuery={searchQuery} />
-        </TabsContent>
-        
-        <TabsContent value="catalogue" className="mt-6">
-          <BooksList searchQuery={searchQuery} />
-        </TabsContent>
-        
-        <TabsContent value="borrowings" className="mt-6">
-          <BorrowingHistory userId={user.id} />
-        </TabsContent>
-        
-        <TabsContent value="materials" className="mt-6">
-          <StudyMaterialsList />
-        </TabsContent>
-      </Tabs>
     </div>
   );
 };
