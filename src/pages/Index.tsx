@@ -5,10 +5,49 @@ import { useUser } from "@/hooks/useUser";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const { user, loading } = useUser();
   const navigate = useNavigate();
+
+  // Create librarian account if it doesn't exist
+  useEffect(() => {
+    const createLibrarianAccount = async () => {
+      try {
+        // Check if librarian account exists
+        const { data: existingUser, error: searchError } = await supabase
+          .from('profiles')
+          .select('email')
+          .eq('email', 'librarian@krmu.edu.in')
+          .maybeSingle();
+
+        if (searchError) throw searchError;
+
+        // If account doesn't exist, create it
+        if (!existingUser) {
+          const { data, error } = await supabase.auth.signUp({
+            email: 'librarian@krmu.edu.in',
+            password: 'lib@krmu',
+            options: {
+              data: { 
+                college_id: 'ADMIN-LIB', 
+                full_name: 'Library Administrator',
+                department: 'admin' 
+              }
+            }
+          });
+
+          if (error) console.error("Error creating librarian account:", error);
+          else console.log("Librarian account created");
+        }
+      } catch (error) {
+        console.error("Error checking for librarian account:", error);
+      }
+    };
+
+    createLibrarianAccount();
+  }, []);
 
   useEffect(() => {
     // If user is logged in, redirect to dashboard
