@@ -84,8 +84,7 @@ const LatestAdditions = () => {
                   <p className="text-sm text-muted-foreground">ISBN: {book.isbn}</p>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className={`text-sm ${book.available ? 'text-green-600' : 'text-red
--600'}`}>
+                  <span className={`text-sm ${book.available ? 'text-green-600' : 'text-red-600'}`}>
                     {book.available ? 'Available' : 'Currently Borrowed'}
                   </span>
                   <Button 
