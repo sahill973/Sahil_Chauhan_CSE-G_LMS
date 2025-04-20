@@ -9,7 +9,137 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      books: {
+        Row: {
+          added_at: string
+          added_by: string | null
+          author: string
+          available: boolean
+          category: string
+          cover_image: string | null
+          description: string | null
+          id: string
+          isbn: string | null
+          title: string
+        }
+        Insert: {
+          added_at?: string
+          added_by?: string | null
+          author: string
+          available?: boolean
+          category: string
+          cover_image?: string | null
+          description?: string | null
+          id?: string
+          isbn?: string | null
+          title: string
+        }
+        Update: {
+          added_at?: string
+          added_by?: string | null
+          author?: string
+          available?: boolean
+          category?: string
+          cover_image?: string | null
+          description?: string | null
+          id?: string
+          isbn?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      borrowings: {
+        Row: {
+          book_id: string
+          borrowed_at: string
+          due_at: string
+          id: string
+          returned_at: string | null
+          user_id: string
+        }
+        Insert: {
+          book_id: string
+          borrowed_at?: string
+          due_at: string
+          id?: string
+          returned_at?: string | null
+          user_id: string
+        }
+        Update: {
+          book_id?: string
+          borrowed_at?: string
+          due_at?: string
+          id?: string
+          returned_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "borrowings_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          college_id: string
+          created_at: string
+          department: string | null
+          full_name: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          college_id: string
+          created_at?: string
+          department?: string | null
+          full_name: string
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          college_id?: string
+          created_at?: string
+          department?: string | null
+          full_name?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      study_materials: {
+        Row: {
+          added_at: string
+          added_by: string | null
+          description: string | null
+          file_url: string | null
+          id: string
+          subject: string
+          title: string
+        }
+        Insert: {
+          added_at?: string
+          added_by?: string | null
+          description?: string | null
+          file_url?: string | null
+          id?: string
+          subject: string
+          title: string
+        }
+        Update: {
+          added_at?: string
+          added_by?: string | null
+          description?: string | null
+          file_url?: string | null
+          id?: string
+          subject?: string
+          title?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -1,0 +1,115 @@
+
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/sonner";
+
+const Auth = () => {
+  const [mode, setMode] = useState<"login" | "signup">("login");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    college_id: "",
+    full_name: "",
+    department: ""
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+  };
+
+  const toggleMode = () => setMode(prev => (prev === "login" ? "signup" : "login"));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (mode === "signup") {
+      // Sign up and inject college_id, full_name, department into metadata
+      const { email, password, college_id, full_name, department } = form;
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { college_id, full_name, department }
+        }
+      });
+      setLoading(false);
+      if (error) return toast.error(error.message);
+      toast.success("Signup successful! Please check your email to confirm.");
+      return;
+    }
+    // Login
+    const { email, password } = form;
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setLoading(false);
+    if (error) return toast.error(error.message);
+    toast.success("Login successful!");
+    navigate("/");
+  };
+
+  return (
+    <div className="flex flex-col min-h-screen items-center justify-center bg-gray-50">
+      <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded px-8 py-8 w-full max-w-md space-y-5">
+        <h1 className="text-2xl font-bold text-center mb-2">{mode === "signup" ? "Sign Up" : "Login"}</h1>
+        <Input
+          name="email"
+          type="email"
+          placeholder="Email address"
+          value={form.email}
+          onChange={handleChange}
+          required
+        />
+        <Input
+          name="password"
+          type="password"
+          placeholder="Password"
+          value={form.password}
+          onChange={handleChange}
+          required
+        />
+        {mode === "signup" && (
+          <>
+            <Input
+              name="college_id"
+              placeholder="College ID"
+              value={form.college_id}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              name="full_name"
+              placeholder="Full Name"
+              value={form.full_name}
+              onChange={handleChange}
+              required
+            />
+            <Input
+              name="department"
+              placeholder="Department (admin for admin)"
+              value={form.department}
+              onChange={handleChange}
+              required
+            />
+          </>
+        )}
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? "Processing..." : mode === "signup" ? "Sign Up" : "Login"}
+        </Button>
+        <div className="flex justify-between mt-2">
+          <span>
+            {mode === "signup" ? "Already have an account?" : "New user?"}
+          </span>
+          <Button type="button" variant="link" className="p-0 h-auto" onClick={toggleMode}>
+            {mode === "signup" ? "Login" : "Sign Up"}
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
+};
+export default Auth;
