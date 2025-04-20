@@ -11,13 +11,13 @@ import SearchBar from "@/components/SearchBar";
 import BookRecommendations from "@/components/BookRecommendations";
 import BorrowingHistory from "@/components/BorrowingHistory";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { book as BookIcon } from "lucide-react";
+import { Book as BookIcon } from "lucide-react";
 
 const Dashboard = () => {
   const { user, profile, loading } = useUser();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const isLibrarian = profile?.email === "librarian@krmu.edu.in" || profile?.department === "admin";
+  const isLibrarian = profile?.department === "admin";
 
   if (loading) return (
     <div className="flex justify-center items-center h-screen bg-gradient-to-br from-primary via-[#ea384c11] to-secondary/10">

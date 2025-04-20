@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -62,7 +61,7 @@ const AdminPanel = () => {
 
   // Add book
   const addBookMutation = useMutation({
-    mutationFn: async (newBook) => {
+    mutationFn: async (newBook: typeof book) => {
       const { data, error } = await supabase.from("books").insert([newBook]);
       if (error) throw error;
       return data;
@@ -79,7 +78,7 @@ const AdminPanel = () => {
 
   // Delete book
   const deleteBookMutation = useMutation({
-    mutationFn: async (id) => {
+    mutationFn: async (id: string) => {
       const { error } = await supabase.from("books").delete().eq("id", id);
       if (error) throw error;
     },
@@ -94,7 +93,7 @@ const AdminPanel = () => {
 
   // Mark book as returned
   const returnBookMutation = useMutation({
-    mutationFn: async ({ id, book_id }) => {
+    mutationFn: async ({ id, book_id }: { id: string, book_id: string }) => {
       // Update borrowing record
       const { error: borrowError } = await supabase
         .from("borrowings")
@@ -123,7 +122,7 @@ const AdminPanel = () => {
 
   // Add study material
   const addMaterialMutation = useMutation({
-    mutationFn: async (newMaterial) => {
+    mutationFn: async (newMaterial: typeof material) => {
       const { data, error } = await supabase.from("study_materials").insert([newMaterial]);
       if (error) throw error;
       return data;
@@ -140,7 +139,7 @@ const AdminPanel = () => {
 
   // Delete material
   const deleteMaterialMutation = useMutation({
-    mutationFn: async (id) => {
+    mutationFn: async (id: string) => {
       const { error } = await supabase.from("study_materials").delete().eq("id", id);
       if (error) throw error;
     },
