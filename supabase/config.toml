@@ -1,1 +1,5 @@
+
 project_id = "zoqsavtnkyamfclotqde"
+
+[functions.generate-sample-books]
+verify_jwt = true
