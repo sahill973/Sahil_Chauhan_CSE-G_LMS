@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Book } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
 import BooksList from "@/components/BooksList";
 import StudyMaterialsList from "@/components/StudyMaterialsList";
@@ -10,7 +11,6 @@ import SearchBar from "@/components/SearchBar";
 import BookRecommendations from "@/components/BookRecommendations";
 import BorrowingHistory from "@/components/BorrowingHistory";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Book } from "lucide-react";
 
 const Dashboard = () => {
   const { user, profile, loading } = useUser();
@@ -61,7 +61,7 @@ const Dashboard = () => {
 
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-bold text-primary flex items-center gap-2">
-              <BookIcon size={18} />
+              <Book size={18} />
               {isLibrarian ? "Library Administration" : "My Library"}
             </h2>
             <Button
