@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Book } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
@@ -39,7 +40,7 @@ const Dashboard = () => {
           backgroundSize: "100% auto",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          opacity: 1
+          opacity: 0.4
         }}
       />
       
