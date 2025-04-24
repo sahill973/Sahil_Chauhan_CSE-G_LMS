@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Book } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
@@ -32,13 +33,13 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen relative">
       <div 
-        className="fixed inset-0 z-0 opacity-5"
+        className="fixed inset-0 bg-white z-0"
         style={{
-          backgroundImage: "url('/lovable-uploads/9272eac6-df7d-4e6c-9a91-c0fde72cb56c.png')",
-          backgroundSize: "contain",
+          backgroundImage: "url('/lovable-uploads/798d159f-a7e7-4c37-8a6e-467197d21205.png')",
+          backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          filter: "grayscale(30%)"
+          opacity: 0.05
         }}
       />
       

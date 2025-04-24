@@ -12,7 +12,7 @@ const Index = () => {
 
   // Add console logs for debugging
   console.log("Index page rendered", { user, loading });
-  console.log("Background image URL:", '/lovable-uploads/9272eac6-df7d-4e6c-9a91-c0fde72cb56c.png');
+  console.log("Background image URL:", '/lovable-uploads/798d159f-a7e7-4c37-8a6e-467197d21205.png');
 
   useEffect(() => {
     const createLibrarianAccount = async () => {
@@ -54,15 +54,16 @@ const Index = () => {
   }, [user, loading, navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col relative bg-white dark:bg-black">
+    <div className="min-h-screen flex flex-col relative">
+      {/* Background with the university logo */}
       <div 
-        className="fixed inset-0 z-0 opacity-5"
+        className="fixed inset-0 bg-white z-0"
         style={{
-          backgroundImage: "url('/lovable-uploads/9272eac6-df7d-4e6c-9a91-c0fde72cb56c.png')",
-          backgroundSize: "contain",
+          backgroundImage: "url('/lovable-uploads/798d159f-a7e7-4c37-8a6e-467197d21205.png')",
+          backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          filter: "grayscale(30%)"
+          opacity: 0.05
         }}
       />
       
