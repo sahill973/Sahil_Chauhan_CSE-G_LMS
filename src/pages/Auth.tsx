@@ -8,8 +8,9 @@ const Auth = () => {
     <div className="flex flex-col min-h-screen items-center justify-center py-8 relative">
       {/* Background Image */}
       <div 
-        className="fixed inset-0 bg-white z-0"
+        className="fixed inset-0 z-0"
         style={{
+          backgroundColor: "#ffffff",
           backgroundImage: "url('/lovable-uploads/1aadf5d1-decb-4d5f-872e-cbfee9a935df.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",

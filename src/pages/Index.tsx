@@ -11,7 +11,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   console.log("Index page rendered", { user, loading });
-  console.log("Background image URL:", '/lovable-uploads/798d159f-a7e7-4c37-8a6e-467197d21205.png');
+  console.log("Background image URL:", '/lovable-uploads/1aadf5d1-decb-4d5f-872e-cbfee9a935df.png');
 
   useEffect(() => {
     const createLibrarianAccount = async () => {
@@ -56,8 +56,9 @@ const Index = () => {
     <div className="min-h-screen flex flex-col relative">
       {/* Background with the university logo */}
       <div 
-        className="fixed inset-0 bg-white z-0"
+        className="fixed inset-0 z-0"
         style={{
+          backgroundColor: "#ffffff",
           backgroundImage: "url('/lovable-uploads/1aadf5d1-decb-4d5f-872e-cbfee9a935df.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
