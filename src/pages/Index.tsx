@@ -1,16 +1,14 @@
-
 import React, { useEffect } from "react";
-import Navigation from "@/components/Navigation";
-import { useUser } from "@/hooks/useUser";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "@/hooks/useUser";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import Navigation from "@/components/Navigation";
 
 const Index = () => {
   const { user, loading } = useUser();
   const navigate = useNavigate();
 
-  // Add console logs for debugging
   console.log("Index page rendered", { user, loading });
   console.log("Background image URL:", '/lovable-uploads/798d159f-a7e7-4c37-8a6e-467197d21205.png');
 
@@ -63,7 +61,7 @@ const Index = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          opacity: 0.05
+          opacity: 0.2
         }}
       />
       

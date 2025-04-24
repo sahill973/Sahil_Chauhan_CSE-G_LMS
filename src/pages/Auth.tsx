@@ -14,7 +14,7 @@ const Auth = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          opacity: 0.05
+          opacity: 0.2  // Increased from 0.05 to 0.2
         }}
       />
       
