@@ -10,11 +10,11 @@ const Auth = () => {
       <div 
         className="fixed inset-0 bg-white z-0"
         style={{
-          backgroundImage: "url('/lovable-uploads/798d159f-a7e7-4c37-8a6e-467197d21205.png')",
+          backgroundImage: "url('/lovable-uploads/1aadf5d1-decb-4d5f-872e-cbfee9a935df.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          opacity: 0.2  // Increased from 0.05 to 0.2
+          opacity: 0.2
         }}
       />
       
