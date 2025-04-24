@@ -36,7 +36,7 @@ const Navigation = () => {
               onClick={() => navigate("/")}
               className="font-playfair text-2xl font-bold text-primary cursor-pointer hover:text-[#ea384c] transition"
             >
-              KRM Library
+              KRMU Library
             </h1>
             
             <NavigationMenu className="ml-10 hidden sm:flex">

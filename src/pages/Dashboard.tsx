@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Book } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
@@ -37,10 +36,10 @@ const Dashboard = () => {
         style={{
           backgroundColor: "#ffffff",
           backgroundImage: "url('https://th.bing.com/th/id/OIP.kCpBGI4eFvBUuAfXs2P-ygAAAA?w=165&h=155&c=7&r=0&o=5&dpr=1.4&pid=1.7')",
-          backgroundSize: "contain",
+          backgroundSize: "100% auto",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          opacity: 0.2
+          opacity: 1
         }}
       />
       

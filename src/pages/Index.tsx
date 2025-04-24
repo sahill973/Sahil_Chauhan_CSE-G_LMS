@@ -53,16 +53,15 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col relative">
-      {/* Background with the university logo */}
       <div 
         className="fixed inset-0 z-0"
         style={{
           backgroundColor: "#ffffff",
           backgroundImage: "url('https://th.bing.com/th/id/OIP.kCpBGI4eFvBUuAfXs2P-ygAAAA?w=165&h=155&c=7&r=0&o=5&dpr=1.4&pid=1.7')",
-          backgroundSize: "contain",
+          backgroundSize: "100% auto",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          opacity: 0.2
+          opacity: 1
         }}
       />
       
