@@ -85,10 +85,26 @@ const Navigation = () => {
                     asChild 
                     variant="link" 
                     className="h-auto p-0"
-                    onClick={() => navigate("/dashboard")}
                   >
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    <NavigationMenuLink 
+                      className={navigationMenuTriggerStyle()}
+                      onClick={() => navigate("/dashboard")}
+                    >
                       Catalog
+                    </NavigationMenuLink>
+                  </Button>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Button 
+                    asChild 
+                    variant="link" 
+                    className="h-auto p-0"
+                  >
+                    <NavigationMenuLink 
+                      className={navigationMenuTriggerStyle()}
+                      onClick={() => navigate("/preview")}
+                    >
+                      Preview
                     </NavigationMenuLink>
                   </Button>
                 </NavigationMenuItem>
