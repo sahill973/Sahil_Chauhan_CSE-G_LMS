@@ -10,6 +10,10 @@ const Index = () => {
   const { user, loading } = useUser();
   const navigate = useNavigate();
 
+  // Add console logs for debugging
+  console.log("Index page rendered", { user, loading });
+  console.log("Background image URL:", '/lovable-uploads/9272eac6-df7d-4e6c-9a91-c0fde72cb56c.png');
+
   useEffect(() => {
     const createLibrarianAccount = async () => {
       try {
@@ -50,7 +54,7 @@ const Index = () => {
   }, [user, loading, navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col relative">
+    <div className="min-h-screen flex flex-col relative bg-white dark:bg-black">
       <div 
         className="fixed inset-0 z-0 opacity-5"
         style={{
