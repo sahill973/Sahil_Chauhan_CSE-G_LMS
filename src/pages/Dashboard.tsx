@@ -36,8 +36,8 @@ const Dashboard = () => {
         className="fixed inset-0 z-0"
         style={{
           backgroundColor: "#ffffff",
-          backgroundImage: "url('/lovable-uploads/1aadf5d1-decb-4d5f-872e-cbfee9a935df.png')",
-          backgroundSize: "cover",
+          backgroundImage: "url('https://th.bing.com/th/id/OIP.kCpBGI4eFvBUuAfXs2P-ygAAAA?w=165&h=155&c=7&r=0&o=5&dpr=1.4&pid=1.7')",
+          backgroundSize: "contain",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           opacity: 0.2
