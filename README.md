@@ -1,73 +1,42 @@
-# Welcome to your Lovable project
+# 📚 Library Management System
 
-## Project info
+A modern web-based Library Management System built with **React**, **TypeScript**, and **Tailwind CSS** using the **Vite** build tool. This project helps users manage library operations like searching, issuing, and tracking books with an intuitive interface.
 
-**URL**: https://lovable.dev/projects/6501bab7-85e8-42c1-95a4-b5d672060eda
+---
 
-## How can I edit this code?
+## 🚀 Features
 
-There are several ways of editing your application.
+- 🔍 **Book Search**: Quickly find books by title or author.
+- 👤 **Role-Based Access**: Separate access for students, faculty, and librarians.
+- 📦 **Book Issuing & Return**: Track borrowing and returning of books.
+- 🧠 **Recommendations**: Suggest books based on user interest (planned).
+- 📝 **Form Validation**: Secure and user-friendly input handling with `React Hook Form` and `Zod`.
+- 💡 **Responsive UI**: Built using `shadcn-ui`, `Radix UI`, and `TailwindCSS`.
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/6501bab7-85e8-42c1-95a4-b5d672060eda) and start prompting.
+## 🛠️ Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+| Tool | Purpose |
+|------|---------|
+| [React](https://reactjs.org/) | Frontend library |
+| [TypeScript](https://www.typescriptlang.org/) | Static typing |
+| [Vite](https://vitejs.dev/) | Fast build tool |
+| [Tailwind CSS](https://tailwindcss.com/) | Utility-first styling |
+| [shadcn/ui](https://ui.shadcn.com/) | UI components |
+| [React Router](https://reactrouter.com/) | Client-side routing |
+| [Supabase (optional)](https://supabase.com/) | Backend as a service |
+| [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) | Form handling and validation |
 
-**Use your preferred IDE**
+---
+## Subitted by:
+1. KARAN LAL SHAH 2301010434 BTECH CSE SEC-G
+2. SAHIL CHAUHAN 2301010434 BTECH CSE SEC-G
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## 📦 Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/6501bab7-85e8-42c1-95a4-b5d672060eda) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+1. **Clone the repo**
+   ```bash
+   git clone https://github.com/yourusername/Sahil_Chauhan_G_LMS
+.git
+   cd library-management-system
