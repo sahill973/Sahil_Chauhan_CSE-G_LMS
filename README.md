@@ -33,9 +33,49 @@ A modern web-based Library Management System built with **React**, **TypeScript*
 1. KARAN LAL SHAH 2301010434 BTECH CSE SEC-G
 2. SAHIL CHAUHAN 2301010434 BTECH CSE SEC-G
 
-## 📦 Installation
+## Install dependencies
 
-1. **Clone the repo**
+bash
+Copy
+Edit
+npm install
+Run the development server
+
+bash
+Copy
+Edit
+npm run dev
+Open your browser at http://localhost:5173
+
+📁 Project Structure
+php
+Copy
+Edit
+📦 root
+ ┣ 📁 public/               # Static assets
+ ┣ 📁 src/                  # Source code
+ ┃ ┣ 📁 components/        # Reusable UI components
+ ┃ ┣ 📁 pages/             # Route-based pages
+ ┃ ┣ 📁 styles/            # Tailwind & global styles
+ ┃ ┗ main.tsx             # React app entry
+ ┣ 📄 index.html           # Main HTML template
+ ┣ 📄 package.json         # Project dependencies and scripts
+ ┗ 📄 tailwind.config.ts   # Tailwind custom config
+
+
+## ✅ Future Enhancements:
+📷 OCR Integration to scan and extract book data from covers
+
+📊 Analytics Dashboard for admin insights
+
+📚 Book Wishlist / Reservation System
+
+🛡️ Authentication & Authorization with Supabase or Firebase
+
+## VIDEO PRESENTATION LINK: 
+
+
+. **Clone the repo**
    ```bash
    git clone https://github.com/yourusername/Sahil_Chauhan_CSE-G_LMS
 .git
