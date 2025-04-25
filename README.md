@@ -37,6 +37,6 @@ A modern web-based Library Management System built with **React**, **TypeScript*
 
 1. **Clone the repo**
    ```bash
-   git clone https://github.com/yourusername/Sahil_Chauhan_G_LMS
+   git clone https://github.com/yourusername/Sahil_Chauhan_CSE-G_LMS
 .git
    cd library-management-system
