@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableRow, TableHeader } from "@/components/ui/table";
 import { toast } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 
-// Book categories
+// Book categories as specified by the user
 const BOOK_CATEGORIES = [
   "Fiction",
   "Non-Fiction",
@@ -19,26 +19,26 @@ const BOOK_CATEGORIES = [
   "History",
   "Biography",
   "Technology",
-  "Literature",
+  "Literature", 
   "Art & Design",
   "Business & Management",
   "Engineering",
   "Philosophy",
-  "Psychology",
+  "Psychology", 
   "Religion & Spirituality",
   "Health & Fitness",
   "Children's Books",
   "Fantasy",
-  "Mystery & Thriller",
+  "Mystery & Thriller", 
   "Romance",
   "Travel",
   "Education",
   "Self-Help",
   "Comics & Graphic Novels",
   "Political Science",
-  "Environmental Science",
+  "Environmental Science", 
   "Sports & Recreation",
-  "Cooking & Food",
+  "Cooking & Food", 
   "Language & Grammar",
   "Music",
   "Law"
@@ -66,7 +66,7 @@ const BookManagement = () => {
   const [uploading, setUploading] = useState(false);
   const queryClient = useQueryClient();
 
-  // Get books grouped by category
+  // Get books
   const { data: books = [], isLoading: booksLoading } = useQuery({
     queryKey: ["books"],
     queryFn: async () => {
