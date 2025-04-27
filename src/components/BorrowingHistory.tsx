@@ -1,9 +1,7 @@
 
 import React from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/sonner";
 import {
   Table,
   TableBody,
@@ -31,7 +29,6 @@ interface Borrowing {
 }
 
 const BorrowingHistory = ({ userId }: BorrowingHistoryProps) => {
-  const queryClient = useQueryClient();
   
   const { data: borrowings = [], isLoading } = useQuery({
     queryKey: ["borrowings", userId],
@@ -45,41 +42,6 @@ const BorrowingHistory = ({ userId }: BorrowingHistoryProps) => {
         .eq("user_id", userId)
         .order("borrowed_at", { ascending: false });
       return data || [];
-    }
-  });
-
-  // Return book mutation
-  const returnMutation = useMutation({
-    mutationFn: async (borrowingId: string) => {
-      const borrowing = borrowings.find(b => b.id === borrowingId);
-      if (!borrowing) throw new Error("Borrowing not found");
-      
-      // Update borrowing to mark as returned
-      const { error: updateBorrowingError } = await supabase
-        .from("borrowings")
-        .update({ returned_at: new Date().toISOString() })
-        .eq("id", borrowingId);
-      
-      if (updateBorrowingError) throw updateBorrowingError;
-      
-      // Update book to mark as available
-      const { error: updateBookError } = await supabase
-        .from("books")
-        .update({ available: true })
-        .eq("id", borrowing.book.id);
-      
-      if (updateBookError) throw updateBookError;
-      
-      return borrowingId;
-    },
-    onSuccess: () => {
-      // Invalidate and refetch queries
-      queryClient.invalidateQueries({ queryKey: ["borrowings"] });
-      queryClient.invalidateQueries({ queryKey: ["books"] });
-      toast.success("Book returned successfully!");
-    },
-    onError: (error) => {
-      toast.error(`Failed to return book: ${error.message}`);
     }
   });
 
@@ -105,7 +67,6 @@ const BorrowingHistory = ({ userId }: BorrowingHistoryProps) => {
                   <TableHead>Borrowed On</TableHead>
                   <TableHead>Due Date</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -129,15 +90,6 @@ const BorrowingHistory = ({ userId }: BorrowingHistoryProps) => {
                             Due in {formatDistanceToNow(new Date(borrowing.due_at))}
                           </span>
                         )}
-                      </TableCell>
-                      <TableCell>
-                        <Button 
-                          size="sm" 
-                          onClick={() => returnMutation.mutate(borrowing.id)}
-                          disabled={returnMutation.isPending}
-                        >
-                          Return
-                        </Button>
                       </TableCell>
                     </TableRow>
                   );

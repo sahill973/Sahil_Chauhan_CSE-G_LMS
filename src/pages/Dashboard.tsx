@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Book } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
 import BooksList from "@/components/BooksList";
-import StudyMaterialsList from "@/components/StudyMaterialsList";
 import AdminPanel from "@/components/AdminPanel";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -80,11 +79,10 @@ const Dashboard = () => {
 
           {!isLibrarian && (
             <Tabs defaultValue="recommendations" className="w-full mt-6">
-              <TabsList className="grid w-full grid-cols-4 bg-secondary/50 border border-primary rounded-md">
+              <TabsList className="grid w-full grid-cols-3 bg-secondary/50 border border-primary rounded-md">
                 <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
                 <TabsTrigger value="catalogue">Full Catalogue</TabsTrigger>
                 <TabsTrigger value="borrowings">My Borrowings</TabsTrigger>
-                <TabsTrigger value="materials">Study Materials</TabsTrigger>
               </TabsList>
 
               <TabsContent value="recommendations" className="mt-6">
@@ -97,10 +95,6 @@ const Dashboard = () => {
 
               <TabsContent value="borrowings" className="mt-6">
                 <BorrowingHistory userId={user.id} />
-              </TabsContent>
-
-              <TabsContent value="materials" className="mt-6">
-                <StudyMaterialsList />
               </TabsContent>
             </Tabs>
           )}

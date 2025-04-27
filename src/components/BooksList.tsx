@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,7 @@ interface Book {
   available: boolean;
   description?: string;
   isbn?: string;
+  cover_image?: string;
 }
 
 interface BooksListProps {
@@ -103,6 +104,7 @@ const BooksList = ({ searchQuery = "", departmentFilter }: BooksListProps) => {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>Cover</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Author</TableHead>
               <TableHead>Category</TableHead>
@@ -113,6 +115,19 @@ const BooksList = ({ searchQuery = "", departmentFilter }: BooksListProps) => {
           <TableBody>
             {books.map((book: Book) => (
               <TableRow key={book.id}>
+                <TableCell>
+                  {book.cover_image ? (
+                    <img 
+                      src={book.cover_image} 
+                      alt={book.title} 
+                      className="w-12 h-16 object-cover rounded"
+                    />
+                  ) : (
+                    <div className="w-12 h-16 bg-slate-200 flex items-center justify-center rounded">
+                      <span className="text-xs text-slate-500">No Cover</span>
+                    </div>
+                  )}
+                </TableCell>
                 <TableCell className="font-medium">{book.title}</TableCell>
                 <TableCell>{book.author}</TableCell>
                 <TableCell>{book.category}</TableCell>
