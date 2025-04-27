@@ -1,105 +1,14 @@
 
-import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { toast } from "@/components/ui/sonner";
-import { supabase } from "@/integrations/supabase/client";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { format, isAfter } from "date-fns";
-
-// Updated interface to handle the potential error from Supabase
-interface BorrowRow {
-  id: string;
-  borrowed_at: string;
-  due_at: string;
-  returned_at: string | null;
-  book_id: string;
-  user_id: string;
-  books: { title: string; author: string; id: string } | null;
-  profiles: { full_name?: string; college_id?: string } | null | { error: boolean };
-}
+import React from "react";
+import { isAfter } from "date-fns";
+import { useOverdueBooks } from "./borrowings/useOverdueBooks";
+import OverdueTable from "./borrowings/OverdueTable";
 
 const OverdueBooks = () => {
-  const queryClient = useQueryClient();
-  const [isLoading, setIsLoading] = useState(false);
-  
-  const { data: borrowings = [], isLoading: borrowingsLoading } = useQuery({
-    queryKey: ["all_borrowings"],
-    queryFn: async () => {
-      console.log("Fetching all borrowings for overdue section");
-      const { data, error } = await supabase
-        .from("borrowings")
-        .select(`
-          id,
-          borrowed_at,
-          due_at,
-          returned_at,
-          book_id,
-          user_id,
-          books:book_id(id, title, author)
-        `)
-        .order("due_at", { ascending: true });
-        
-      if (error) {
-        console.error("Error fetching borrowings:", error);
-        toast.error("Failed to load overdue books");
-        throw error;
-      }
-      
-      // Fetch user profiles separately to avoid the relation error
-      const borrowingsWithProfiles = await Promise.all(
-        (data || []).map(async (borrow) => {
-          const { data: profileData } = await supabase
-            .from("profiles")
-            .select("full_name, college_id")
-            .eq("id", borrow.user_id)
-            .maybeSingle();
-            
-          return {
-            ...borrow,
-            profiles: profileData || { full_name: "Unknown User", college_id: "" }
-          };
-        })
-      );
-      
-      return borrowingsWithProfiles as BorrowRow[];
-    }
-  });
-
-  const returnBookMutation = useMutation({
-    mutationFn: async ({ id, book_id }: { id: string, book_id: string }) => {
-      setIsLoading(true);
-      try {
-        // Update borrowing record
-        const { error: borrowError } = await supabase
-          .from("borrowings")
-          .update({ returned_at: new Date().toISOString() })
-          .eq("id", id);
-        if (borrowError) throw borrowError;
-        
-        // Update book availability
-        const { error: bookError } = await supabase
-          .from("books")
-          .update({ available: true })
-          .eq("id", book_id);
-        if (bookError) throw bookError;
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    onSuccess: () => {
-      toast.success("Book marked as returned");
-      queryClient.invalidateQueries({ queryKey: ["all_borrowings"] });
-      queryClient.invalidateQueries({ queryKey: ["books"] });
-    },
-    onError: (error) => {
-      console.error("Error returning book:", error);
-      toast.error("Failed to return book: " + error.message);
-    }
-  });
+  const { borrowings, borrowingsLoading, isLoading, returnBookMutation } = useOverdueBooks();
 
   // Filter for overdue books
-  const overdueBooks = (borrowings as BorrowRow[]).filter(b => 
+  const overdueBooks = borrowings.filter(b => 
     !b.returned_at && isAfter(new Date(), new Date(b.due_at))
   );
 
@@ -107,18 +16,6 @@ const OverdueBooks = () => {
     if (!confirm("Mark this book as returned?")) return;
     returnBookMutation.mutate({ id, book_id });
   }
-
-  // Helper function to safely get the borrower name
-  const getBorrowerName = (profile: BorrowRow['profiles']) => {
-    if (!profile || 'error' in profile) return "Unknown User";
-    return profile.full_name || "Unknown User";
-  };
-
-  // Helper function to safely get the borrower ID
-  const getBorrowerID = (profile: BorrowRow['profiles']) => {
-    if (!profile || 'error' in profile) return "";
-    return profile.college_id ? `(${profile.college_id})` : "";
-  };
 
   return (
     <div>
@@ -132,44 +29,11 @@ const OverdueBooks = () => {
           {overdueBooks.length === 0 ? (
             <div className="p-6 text-center">No overdue books!</div>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Book</TableHead>
-                  <TableHead>Borrower</TableHead>
-                  <TableHead>Due Date</TableHead>
-                  <TableHead>Days Overdue</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {overdueBooks.map((borrow: BorrowRow) => {
-                  const daysOverdue = Math.floor(
-                    (new Date().getTime() - new Date(borrow.due_at).getTime()) / (1000 * 3600 * 24)
-                  );
-                  return (
-                    <TableRow key={borrow.id} className="bg-red-50">
-                      <TableCell className="font-medium">{borrow.books?.title || "Unknown book"}</TableCell>
-                      <TableCell>
-                        {getBorrowerName(borrow.profiles)} 
-                        {getBorrowerID(borrow.profiles)}
-                      </TableCell>
-                      <TableCell>{format(new Date(borrow.due_at), 'MMM dd, yyyy')}</TableCell>
-                      <TableCell className="font-bold text-red-600">{daysOverdue} days</TableCell>
-                      <TableCell>
-                        <Button 
-                          size="sm"
-                          disabled={isLoading || returnBookMutation.isPending}
-                          onClick={() => handleReturnBook(borrow.id, borrow.book_id)}
-                        >
-                          Mark as Returned
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
+            <OverdueTable 
+              overdueBooks={overdueBooks}
+              onReturnBook={handleReturnBook}
+              isLoading={isLoading}
+            />
           )}
         </div>
       )}
