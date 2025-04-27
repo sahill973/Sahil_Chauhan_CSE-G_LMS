@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { format, isAfter } from "date-fns";
 
+// Updated interface to handle the potential error from Supabase
 interface BorrowRow {
   id: string;
   borrowed_at: string;
@@ -15,7 +16,7 @@ interface BorrowRow {
   book_id: string;
   user_id: string;
   books: { title: string; author: string; id: string } | null;
-  profiles: { full_name: string; college_id: string } | null;
+  profiles: { full_name?: string; college_id?: string } | null | { error: boolean };
 }
 
 const OverdueBooks = () => {
@@ -35,8 +36,7 @@ const OverdueBooks = () => {
           returned_at,
           book_id,
           user_id,
-          books:book_id(id, title, author),
-          profiles:user_id(full_name, college_id)
+          books:book_id(id, title, author)
         `)
         .order("due_at", { ascending: true });
         
@@ -46,7 +46,23 @@ const OverdueBooks = () => {
         throw error;
       }
       
-      return data || [];
+      // Fetch user profiles separately to avoid the relation error
+      const borrowingsWithProfiles = await Promise.all(
+        (data || []).map(async (borrow) => {
+          const { data: profileData } = await supabase
+            .from("profiles")
+            .select("full_name, college_id")
+            .eq("id", borrow.user_id)
+            .maybeSingle();
+            
+          return {
+            ...borrow,
+            profiles: profileData || { full_name: "Unknown User", college_id: "" }
+          };
+        })
+      );
+      
+      return borrowingsWithProfiles as BorrowRow[];
     }
   });
 
@@ -92,6 +108,18 @@ const OverdueBooks = () => {
     returnBookMutation.mutate({ id, book_id });
   }
 
+  // Helper function to safely get the borrower name
+  const getBorrowerName = (profile: BorrowRow['profiles']) => {
+    if (!profile || 'error' in profile) return "Unknown User";
+    return profile.full_name || "Unknown User";
+  };
+
+  // Helper function to safely get the borrower ID
+  const getBorrowerID = (profile: BorrowRow['profiles']) => {
+    if (!profile || 'error' in profile) return "";
+    return profile.college_id ? `(${profile.college_id})` : "";
+  };
+
   return (
     <div>
       <h3 className="font-semibold mb-4 text-red-600">
@@ -123,8 +151,8 @@ const OverdueBooks = () => {
                     <TableRow key={borrow.id} className="bg-red-50">
                       <TableCell className="font-medium">{borrow.books?.title || "Unknown book"}</TableCell>
                       <TableCell>
-                        {borrow.profiles?.full_name || "Unknown user"} 
-                        {borrow.profiles?.college_id ? `(${borrow.profiles.college_id})` : ""}
+                        {getBorrowerName(borrow.profiles)} 
+                        {getBorrowerID(borrow.profiles)}
                       </TableCell>
                       <TableCell>{format(new Date(borrow.due_at), 'MMM dd, yyyy')}</TableCell>
                       <TableCell className="font-bold text-red-600">{daysOverdue} days</TableCell>
