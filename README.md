@@ -29,10 +29,6 @@ A modern web-based Library Management System built with **React**, **TypeScript*
 | [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) | Form handling and validation |
 
 ---
-## Subitted by:
-1. KARAN LAL SHAH 2301010434 BTECH CSE SEC-G
-2. SAHIL CHAUHAN 2301010434 BTECH CSE SEC-G
-
 ## Install dependencies
 
 bash
