@@ -68,8 +68,6 @@ Edit
 
 🛡️ Authentication & Authorization with Supabase or Firebase
 
-## VIDEO PRESENTATION LINK: 
-
 
 . **Clone the repo**
    ```bash
